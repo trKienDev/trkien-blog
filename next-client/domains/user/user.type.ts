@@ -4,7 +4,6 @@ export type UserRequestForm = {
       email: string;
       password: string;
       confirmPassword: string;
-      roles: string[];
 };
 
 export type UserRequestPayload = {
@@ -12,5 +11,4 @@ export type UserRequestPayload = {
       username: string;
       email: string;
       password: string;
-      roles: string[];
 };

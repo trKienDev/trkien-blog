@@ -16,7 +16,4 @@ export class User {
 
       @Column()
       passwordHash: string;
-
-      @Column('text', { array: true })
-      roles: string[];
 }

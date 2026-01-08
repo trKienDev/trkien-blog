@@ -13,7 +13,4 @@ export class UserRequestPayload {
       @IsString()
       @MinLength(6)
       password: string;
-
-      @IsArray()
-      roles: string[];
 }

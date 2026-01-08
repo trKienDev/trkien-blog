@@ -20,9 +20,7 @@ export default function AddMemberModal({ open, onClose }: AddMemberModalProps) {
             handleSubmit,
             watch,
             formState: { errors, isSubmitting }
-      } = useForm<UserRequestForm>({
-            defaultValues: { roles: [] }
-      });
+      } = useForm<UserRequestForm>({ });
       const password = watch('password');
 
       if (!open) return null;
@@ -34,11 +32,12 @@ export default function AddMemberModal({ open, onClose }: AddMemberModalProps) {
                         username: data.username,
                         email: data.email,
                         password: data.password,
-                        roles: data.roles
                   };
 
-                  await CreateUser(payload);
+                  
 
+                  await CreateUser(payload);
+                  alert('Success');
                   onClose();
             } catch(err) {
                   alert(err instanceof Error ? err.message : 'Create user failed');
@@ -133,23 +132,12 @@ export default function AddMemberModal({ open, onClose }: AddMemberModalProps) {
                                           <p className="text-red-500 text-xs mt-1">{errors.confirmPassword.message}</p>
                                     )}
                               </div>
-                              <div>
-                                    <label className="form-label block mb-1">Roles</label>
-                                    <label className="flex items-center gap-2">
-                                          <input type="checkbox" />
-                                          Administrators
-                                    </label>
-                                    <label className="flex items-center gap-2">
-                                          <input type="checkbox" />
-                                          Editors
-                                    </label>
-                              </div>
                         </div>
 
                         {/* Footer */}
                         <div className="flex justify-end gap-2 px-5 py-3">
-                              <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
-                              <button type="submit" className="save-button"  disabled={isSubmitting}>
+                              <button type="button" className="flex-1 cancel-button" onClick={onClose}>Cancel</button>
+                              <button type="submit" className="flex-1 save-button"  disabled={isSubmitting}>
                                     {isSubmitting ? 'Saving...' : 'Save'}
                               </button>
                         </div>

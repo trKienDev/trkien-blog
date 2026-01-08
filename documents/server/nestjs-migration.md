@@ -73,7 +73,7 @@ package.json
       "scripts": {
             "build": "nest build",
 
-            "migration:generate": "npm run build && npx typeorm -d dist/data-source.js migration:generate src/migrations/create-users",
+            "migration:generate": "npm run build && npx typeorm -d dist/data-source.js migration:generate",
             "migration:run": "npm run build && npx typeorm -d dist/data-source.js migration:run",
             "migration:revert": "npm run build && npx typeorm -d dist/data-source.js migration:revert"
       }
@@ -87,7 +87,7 @@ npm run build
 
 # Bước 4: generate migration
 ```bash
-npm run migration:generate
+npm run migration:generate -- src/migrations/{remove-user-role}
 ```
 
 - ***src/migrations/create-users*** → tên migration

@@ -20,7 +20,6 @@ export class UserService {
                   username: payload.username,
                   email: payload.email,
                   passwordHash: passwordHash,
-                  roles: payload.roles
             });
 
             return this.userRepo.save(user);
