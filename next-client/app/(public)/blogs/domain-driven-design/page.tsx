@@ -1,23 +1,48 @@
+import Image from "next/image";
+
 export default function DomainDrivenDesign() {
       return (
             <>
-                  <h1 className="font-bold  text-center">Domain Driven Design</h1>
-                  <br></br>
-                  <p>
-                        Sau 1 khoảng thời gian khá dài phát triển dự án ERP theo cách tiếp cận DDD, bản thân mình đã đọc qua nhiều tải liệu về DDD cũng như cách áp dụng vào dự án thực tiếp.
-                        <br></br>
-                        Mình viết bài viết này để chia sẻ hiểu biết và trải nghiệm của mình sau khi học và áp dụng DDD vào project thực tế, bài viết sẽ tập trung trả lời câu hỏi: what, why, when và các ví dụ cho từng nội dung.
-                        <br></br>
-                        Kiến thức và kinh nghiệm của mình cũng chưa nhiều nên có thể sẽ có những sai sót trong bài viết. Mình sẽ rất vui nếu đọc giả có thể chỉ ra và giúp mình hoàn thiện nội dung bài viết hơn.
-                  </p>
-                  <br></br>
+                  <div className="flex gap-2">
+                        <div className="flex flex-col justify-between">
+                              <h1>
+                                    DDD: Domain Driven Design
+                              </h1>
+                              <div className="tag-list">
+                                    <ul className="flex gap-2">
+                                          <li className="tag-item">
+                                                <a href="">DDD</a>
+                                          </li>
+                                          <li className="tag-item">
+                                                <a href="">ERP</a>
+                                          </li>
+                                          <li className="tag-item">
+                                                <a href="">Software Architect</a>
+                                          </li>
+                                    </ul>
+                              </div>
+                        </div>
+                        <div className="relative w-[720px] h-[405px] rounded-lg overflow-hidden">
+                              <Image src="/thumbnails/domain-driven-design-thumbnail.png" alt="thumbnail" fill />
+                        </div>
+                  </div>
+                  
+                  <div className="mt-[50px]">
+                        <p className="paragraph">
+                              Sau 1 khoảng thời gian khá dài phát triển dự án ERP theo cách tiếp cận DDD, bản thân mình đã đọc qua nhiều tải liệu về DDD cũng như cách áp dụng vào dự án thực tế là như thế.
+                              <br></br>
+                              Mình viết bài viết này để chia sẻ hiểu biết và trải nghiệm của mình sau khi học và áp dụng DDD vào project thực tế, bài viết sẽ tập trung trả lời câu hỏi: what, why, when và các ví dụ cho từng nội dung.
+                              <br></br>
+                              Kiến thức và kinh nghiệm của mình cũng chưa nhiều nên có thể sẽ có những sai sót trong bài viết. Mình sẽ rất vui nếu đọc giả có thể chỉ ra và giúp mình hoàn thiện nội dung bài viết hơn.
+                        </p>
+                  </div>
 
 
                   <div>
-                        <h1>Hiểu về DDĐ</h1>
+                        <h2>Hiểu về DDD: Domain Driven Design</h2>
 
                         <div>
-                              <h2>WHAT</h2>
+                              <h3>WHAT</h3>
                               <p>
                                     DDD không có 1 pattern cụ thể nào cả mà nó là 1 triết lý xây dựng hệ thống phần mềm xoay quanh nghiệp vụ của doanh nghiệp
                                     <br></br>
@@ -118,7 +143,7 @@ export default function DomainDrivenDesign() {
                                     Điều này còn giúp code của project thống nhất
                               </p>
                         </div>
-                        
+
                         <div>
                               <p>Mình đã giới thiệu tổng quan về DDD - Domain Driven Design. Đây là 1 nội dung dài, phức tạp nên mình sẽ chia thành nhiều bài viết.
                                     Cám ơn đã đọc bài viết của mình, mình sẽ cập nhật thêm các bài viết mới về DDD trong thời gian tới
