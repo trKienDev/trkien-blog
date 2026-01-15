@@ -1,4 +1,6 @@
 import Image from "next/image";
+import fontCss from "../../../_font.module.css";
+import Callout from "@/components/callout/callout";
 
 export default function DomainDrivenDesign() {
       return (
@@ -43,34 +45,119 @@ export default function DomainDrivenDesign() {
 
                         <div>
                               <h3>WHAT</h3>
-                              <p>
-                                    DDD không có 1 pattern cụ thể nào cả mà nó là 1 triết lý xây dựng hệ thống phần mềm xoay quanh nghiệp vụ của doanh nghiệp,
-                                    nên DDD sẽ phụ thuộc nhiều vào kiến thức xây dựng hệ thống lập trình viên.
+                              <p className="paragraph">
+                                    DDD (Domain Driven Design) <strong>không phải là một pattern hay một framework cụ thể</strong>, mà là một <strong>triết lý xây dựng hệ thống phần mềm xoay quanh nghiệp vụ của doanh nghiệp</strong>. 
+                                    Vì tập trung vào nghiệp vụ, nên hiệu quả của DDD phụ thuộc rất nhiều vào việc người xây dựng hệ thống <strong>hiểu nghiệp vụ đến đâu</strong>.
+                              </p>
+                              <p className="paragraph">
+                                    Theo trải nghiệm cá nhân của mình, DDD phát huy giá trị rõ rệt nhất khi được áp dụng vào các hệ thống ERP của doanh nghiệp.
+                                    Mỗi doanh nghiệp đều có quy trình nghiệp vụ riêng: có nơi đơn giản, có nơi rất phức tạp. Và trong thực tế làm việc khoảng gần 1.5 năm, mình nhận ra một điều: nghiệp vụ doanh nghiệp gần như không bao giờ đứng yên.
                               </p>
 
+                              <div>
+                                    Nghiệp vụ có thể thay đổi do:
+                                    <ul className="bullet-list">
+                                          <li>điều chỉnh chiến lược kinh doanh</li>
+                                          <li>tối ưu lại quy trình vận hành,</li>
+                                          <li>hoặc thay đổi theo chính sách, quy định của nhà nước.</li>
+                                    </ul>
+                                    Vì vậy, việc hệ thống phải liên tục thay đổi để đáp ứng nghiệp vụ mới là điều tất yếu.
+                              </div>
+
+                              <h4>Khi CRUD không còn đủ</h4>
                               <p>
-                                    Với mình, DDD sẽ phát huy mạnh nhất khi áp dụng vào các ứng dụng vào các hệ thống ERP của doanh nghiệp
+                                    Trong nhiều hệ thống ERP, đặc biệt ở giai đoạn đầu, hệ thống thường được xây dựng theo hướng <strong>CRUD thuần:</strong> 
+                                    người dùng nhập dữ liệu → hệ thống lưu xuống database → hiển thị dữ liệu ra client → chỉnh sửa, xoá, cập nhật.
+                                    Cách làm này ban đầu có thể đơn giản, nhanh và chạy rất mượt. 
+                                    Tuy nhiên, khi quy trình nghiệp vụ mở rộng, đặc biệt trong các lĩnh vực như tài chính, sản xuất, quản trị, hệ thống sẽ dần trở nên phức tạp và khó kiểm soát nếu chỉ dựa vào CRUD và các đoạn if–else rải rác.
+                              </p>
+
+                              <h4>Ví dụ từ 1 hệ thống ERP thực tế</h4>
+                              <p>
+                                    Một hệ thống ERP mình từng tham gia triển khai là hệ thống quản lý <strong>các chứng từ thanh toán và tạm ứng cho quy mô tập đoàn</strong>.
+                                    <br></br>
+                                    Quy trình nghiệp vụ không chỉ đơn giản là: <span className="highlight-blue-fg">tạo form → gửi duyệt → user bấm duyệt là xong</span> .
+                              </p>
+                              <div>
+                                    Thực tế phức tạp hơn rất nhiều:
+                                    <ul className="bullet-list">
+                                          <li>Mỗi đề nghị thanh toán phải dựa trên kế hoạch ngân sách đã được duyệt từ đầu tháng.</li>
+                                          <li>Mỗi kế hoạch ngân sách có mã ngân sách và tên ngân sách riêng, và không được trùng mã trong cùng phòng ban.</li>
+                                          <li>Mỗi mã ngân sách lại tham chiếu đến mã dòng tiền đi.</li>
+                                          <li>Đề nghị thanh toán được phép vượt tối đa 5% ngân sách.</li>
+                                          <li>Sau khi đề nghị được duyệt hoàn toàn, kế toán mới tạo lệnh chi, và việc này có thể diễn ra trễ.</li>
+                                          <li>Một đề nghị thanh toán có thể phát sinh nhiều khoản tiền chi.</li>
+                                    </ul>
+                                    Tất cả những ràng buộc trên có thể coi là các quy tắc nghiệp vụ (business rules) của hệ thống.
+                              </div>
+
+                              <h4>Vấn dề</h4>
+                              Những quy tắc này không chỉ xuất hiện ở một chỗ, mà lặp lại ở nhiều quy trình khác nhau.
+                              <br />
+                              Ví dụ
+                              <ul className="bullet-list">
+                                    <li>Khi tạo đề nghị thanh toán → không được vượt ngân sách.</li>
+                                    <li>Khi tạo đề nghị tạm ứng → cũng không được vượt ngân sách.</li>
+                              </ul>
+                              Nếu mỗi lần xử lý nghiệp vụ, hệ thống lại: truy vấn kế hoạch ngân sách từ database, rồi viết các đoạn kiểm tra kiểu như:    
+                              <code>{`if (expenseRequest.Amount > budgetPlan.Amount) `}</code>
+                              thì logic nghiệp vụ sẽ nhanh chóng bị trùng lặp, phân tán và khó bảo trì.
+
+                              <h4>Cách tiếp cận theo DDD</h4>
+                              Trong cách tiếp cận DDD, những đoạn kiểm tra như vậy <strong>không chỉ đơn thuần là điều kiện kỹ thuật</strong>, mà là một phần của nghiệp vụ. 
+                              Vì thế, thay vì đặt chúng rải rác ở nhiều nơi, ta đưa chúng vào chính đối tượng nghiệp vụ liên quan.
+                              <br />
+                              Ví dụ, quy tắc “kiểm tra số tiền có vượt ngân sách hay không” được đặt vào entity *BudgetPlan*:
+                              <code>bool IsValid(Money amount)</code>
+                              <br />
+                              Từ đó, mọi nghiệp vụ liên quan đến ngân sách chỉ cần gọi hành vi này của BudgetPlan, thay vì tự kiểm tra theo cách riêng.
+
+                              <br />
+                              Lúc này, BudgetPlan không còn chỉ là một object chứa dữ liệu, mà trở thành một mô hình nghiệp vụ (domain model) với các ràng buộc rõ ràng. Các đối tượng khác như:
+                              <ul className="bullet-list">
+                                    <li>ExpensePayment (đề nghị thanh toán),</li>
+                                    <li>AdvancePayment (đề nghị tạm ứng),</li>
+                                    <li>BudgetTransaction (ghi nhận giao dịch),</li>
+                              </ul>
+                              khi cần tương tác với ngân sách đều phải thông qua các <strong>hành vi nghiệp vụ đã được định nghĩa sẵn</strong> trong domain.
+
+                              <Callout>
+                                    Thông qua ví dụ trên, có thể thấy DDD không tập trung vào database hay CRUD, mà tập trung vào việc hiện thực hoá nghiệp vụ của doanh nghiệp một cách rõ ràng và nhất quán trong mã nguồn.
+                              </Callout>
+                              
+
+                              <br /><br /><br /><br />
+                              <div>
+                                    Với mình, DDD sẽ phát huy mạnh nhất khi áp dụng vào các ứng dụng vào các hệ thống ERP của doanh nghiệp.
                                     Mỗi doanh nghiệp sẽ có quy trình nghiệp vụ khác nhau, phức tạp cũng có mà đơn giản cũng có. 
-                                    Trong khoảng gần 1.5 năm làm việc của mình, minh nhận ra rằng nghiệp vụ của doanh nghiệp sẽ luôn thay đổi, có thể là do sự thay đổi chiến lược kinh doanh, tối ưu hóa quy trình, hoặc là do sự thay đổi bị động từ chính sách của nhà nước
-                                    Vì thế việc phải thay đổi code để đáp ứng sự thay đổi nghiệp vụ doanh nghiệp là điều tất yếu
-                                    Thế nhưng nếu 1 hệ thống ERP chỉ được phát triển chỉ để phục vụ CRUD (nhập dữ liệu đầu vào, hệ thống lưu xuồng DB, hiển thị dữ liệu ra client và thực hiện các thao tác CRUD) 
-                                    Ban đầu hệ thống có thể chạy mượt mà, trơn chu, tuy nhiên hệ thống sẽ trở nên phức tạp khi quy trình mở rộng, đặc biệt khi phục vụ trong các nghiệp vụ đặc thù như sản xuất
+                                    Trong khoảng gần 1.5 năm làm việc của mình, minh nhận ra rằng nghiệp vụ của doanh nghiệp sẽ luôn thay đổi, có thể là do sự thay đổi chiến lược kinh doanh, tối ưu hóa quy trình, hoặc thay đổi phù hợp theo chính sách của nhà nước.
+                                    Vì thế việc phải thay đổi code để đáp ứng sự thay đổi nghiệp vụ doanh nghiệp là điều tất yếu.
+                                    Thế nhưng nếu 1 hệ thống ERP chỉ được phát triển chỉ để phục vụ CRUD (nhập dữ liệu đầu vào, hệ thống lưu xuồng DB, hiển thị dữ liệu ra client và thực hiện các thao tác CRUD) thì
+                                    ban đầu hệ thống có thể chạy mượt mà, trơn chu, tuy nhiên hệ thống sẽ trở nên phức tạp khi quy trình mở rộng, đặc biệt khi phục vụ trong các nghiệp vụ đặc thù như sản xuất, quản trị.
+                                    <br /><br/>
+                                    <strong>Ví dụ: </strong>
                                     <br />
-                                    <span>Ví dụ</span>
-                                    <br />
-                                    1 hệ thống ERP mình đã từng phụ trách triển khai chính là hệ thống quản lý các đề nghị thanh toán, tạm ứng cho quy mô tập đoàn. Các đơn vị khi muốn làm đề xuất thanh toán thì phải làm tờ trình, qua các cấp duyệt thì mới được Phòng Kế toán chi tiến.
-                                    Nếu trước đây các đề xuất này làm trên giấy và ký sống thì nay phải được số hóa trên 1 hệ thống ERP. Và câu chuyện sẽ không đơn giản chỉ là làm form trình kỳ, gửi form trình ký dến user duyệt và user submit duyệt là xong.
-                                    Mỗi đề xuất thanh toán phải dựa trên kế hoạch ngân sách đã được duyệt từ đầu tháng, mỗi kế hoạch ngân sách phải có mã ngân sách và tên ngân sách. Mỗi phòng ban phải tạo kế hoạch ngân sách và không được phép có trùng 2 mã ngân sách.
-                                    Mỗi mã ngân sách lại phải tham chiếu đến mã dòng tiền đi. Đề nghị thanh toán được phép vượt 5% kế hoạch ngân sách. Khi đề nghị thanh toán được duyệt hoàn toàn thì phải đợi Kế toán tạo lệnh cho khoản tiền chi, được phép tạo trễ, mỗi đề nghị thanh toán lại có thể tạo nhiều hơn 1 khoản tiền đi.
-                                    <br />
-                                    Những quy định trên mình sẽ gọi là 1 rule và trong hệ thống thanh toán mình xây dựng thì có rất nhiều rule ràng buộc giữa Đề nghị thanh toán, ngân sách, user tạo đề nghị, user xem xét, user phê duyệt, kế toán, ....
+                                    1 hệ thống ERP mình đã từng phụ trách triển khai chính là hệ thống quản lý các chứng từ như đề nghị thanh toán, tạm ứng cho quy mô tập đoàn. 
+                                    Các đơn vị khi muốn làm đề xuất thanh toán thì phải làm tờ trình, qua các cấp duyệt thì mới được Phòng Kế toán chi tiến.
+                                    Nếu trước đây các đề xuất này làm trên giấy và ký sống thì nay phải được số hóa trên 1 hệ thống ERP, và câu chuyện sẽ không đơn giản chỉ là làm form trình ký, gửi form trình ký dến user duyệt và user submit duyệt là xong.
+                                    
+                                    <ul className="bullet-list">
+                                          <li>Mỗi đề xuất thanh toán phải dựa trên kế hoạch ngân sách đã được duyệt từ đầu tháng</li>
+                                          <li>Mỗi kế hoạch ngân sách phải có mã ngân sách và tên ngân sách.</li>
+                                          <li>Mỗi phòng ban phải tạo kế hoạch ngân sách và không được phép có trùng 2 mã ngân sách.</li>
+                                          <li>Mỗi mã ngân sách lại phải tham chiếu đến mã dòng tiền đi.</li>
+                                          <li>Đề nghị thanh toán được phép vượt 5% kế hoạch ngân sách.</li>
+                                          <li>Khi đề nghị thanh toán được duyệt hoàn toàn thì phải đợi Kế toán tạo lệnh cho khoản tiền chi, được phép tạo trễ.</li>
+                                          <li>Mỗi đề nghị thanh toán lại có thể tạo nhiều hơn 1 khoản tiền đi.</li>
+                                    </ul>
+                                    Những quy định trên mình sẽ gọi là 1 rule và trong hệ thống thanh toán mình xây dựng thì có rất nhiều rule ràng buộc giữa các chứng từ thanh toán, ngân sách, user tạo chứng từ, user xem xét, user phê duyệt, kế toán, ....
                                     Vậy hệ thống bắt buộc phải hiện thực hóa toàn bộ rule này, mỗi rule có thể xuất hiện ở nhiều quy trình như khi tạo đề xuất thanh toán thì không được phép vượt ngân sách, khi tạo đề xuất tạm ứng thì cũng không được phép vượt ngân sách.
                                     Vậy bạn sẽ gọi rule này mỗi khi có 1 request cần đến nó, và sẽ tệ nếu mỗi lần tạo thanh toán bạn lại phải tìm record budgetPlan tương ứng trong database rồi thực hiện so sánh <span>{`if (expenseRequest.Amount > budgetPlan.Amount)`}</span> đúng không ?
                                     Lúc này ta coi <span>{`if (expenseRequest.Amount > budgetPlan.Amount)`}</span> sẽ là 1 hàm nghiệp vụ và đưa vào class entity BudgetPlan
                                     <span>{`internal bool isValid(Money amount)`}</span>
                                     và mỗi lần cần xác thực tiền thanh toán có vượt ngân sách không thì ta chỉ gọi hàm <span>{`isValid()`}</span> của entity BudgetPlan để xác thực.
 
-                              </p>
+                              </div>
 
                               <p>
                                     Vậy lúc này ta sẽ coi 1 entity BudgetPlan là 1 domain nghiệp vụ có các hàm nghiệp vụ ràng buộc rõ ràng. Các nghiệp vụ cần tương tác với BudgetPlan đều phải gọi các hàm nghiệp vụ của class.

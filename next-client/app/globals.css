@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
+
 :root {
       --bright-blue: #0096FF;
+      --primary-fg-color: #5955d1;
+      --blue-fg-color: #000eda;
 
       --primary-bg-color: #fff;
       --secondary-bg-color: #f6f8fa;
@@ -9,6 +12,7 @@
       --label-color: #645f5f;
 
       --heading-title-color: #29294b;
+
 }
 
 body {
@@ -25,10 +29,8 @@ header {
 
 h1 { font-size: 3.25rem; line-height: 1.2; font-weight: 700; color: var(--heading-title-color) }
 h2 { font-size: 2.5rem; line-height: 1.2; font-weight: 700; color: var(--heading-title-color); margin: 28px 0px 14px 0px; }
-h3 {
-      font-size: 2rem; line-height: 1.2; font-weight: 700; color: #8754ba; 
-      margin-top: 20px; margin-bottom: 10px;
-}
+h3 { font-size: 2rem; line-height: 1.2; font-weight: 700; color: #6800d0;  margin-top: 20px; margin-bottom: 10px; }
+h4 { font-size: 1.5rem; line-height: 1.2; font-weight: 700; color: #2609b1; margin-top: 20px; margin-bottom: 10px; }
 
 /* Page */
 .page-section {
@@ -112,43 +114,50 @@ button, .button { font-family: 'Lexend', sans-serif;  padding: 8px; border-radiu
 
 .tag-item {
       background-color: white;
-      padding: 5px 8px;
+      padding: 0px 8px;
       box-shadow: 0px 5px 20px 0px rgba(144,144,255,.15);
       border-radius: 5px;
       cursor: pointer;
+      font-size: 12px;
+      transition: .25s;
 }
 .tag-item:hover {
       box-shadow: 0px 5px 25px 0px rgba(144,144,255,.4);
-      color: var(--bright-blue);
+      color: var(--primary-fg-color);
+}
+
+/* text */
+.highlight-blue-fg {
+      color: #000eda;
 }
 
 /* content */
 .paragraph {
-      margin: 28px 0px;
+      margin: 14px 0px;
       color: #2b2b44;
 }
 
 .bullet-list {
       list-style: inherit;
       padding-left: 20px;
-      margin-top: 14px; margin-bottom: 28px;
+      margin: 14px 0px;
 }
 .bullet-list li {
       margin: 10px 0px;
 }
 .bullet-list li::marker {
-      color: #5955d1;
+      color: var(--primary-fg-color);
 }
 
 .section-title {
       position: relative;
       padding-left: 20px;
       font-weight: 700;
-      color: #5955d1;;
+      color: var(--primary-fg-color);
 }
 .section-title::before {
       content: "";
-      background: #5955d1;
+      background: var(--primary-fg-color);
       border-radius: 2px;
       width: 9px;
       height: 18px;

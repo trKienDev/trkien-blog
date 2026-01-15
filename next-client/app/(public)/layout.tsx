@@ -1,6 +1,6 @@
 import Image from "next/image";
 import layoutStyles from "../layout.module.css";
-import { metamorphous } from "../font";
+import layoutCss from "../layout.module.css";
 
 export default function PublicLayout({
       children,
@@ -16,7 +16,7 @@ export default function PublicLayout({
                                           <h1 className="header-logo select-none">
                                                 <a className="flex items-center gap-1" href="/">
                                                       <Image src="/logo.png" alt="logo" width={50} height={50} />
-                                                      <span className={`${layoutStyles.logoTitle} ${metamorphous.className}`}>
+                                                      <span className={`${layoutStyles.logoTitle}`}>
                                                             trkien.dev
                                                       </span>
                                                 </a>
@@ -28,7 +28,9 @@ export default function PublicLayout({
                                     {children}
                               </main>
 
-                              <footer></footer>
+                              <footer className={layoutCss.footer} >
+                                    <span className={layoutCss.footerCopyright}>© 2026 — trKien.Blog. All Rights Reserved.</span>
+                              </footer>
                         </div>
                   </section>
             </>
