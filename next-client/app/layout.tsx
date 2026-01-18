@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
+import '@/components/code/code-block.css';
 
 config.autoAddCss = false;
 

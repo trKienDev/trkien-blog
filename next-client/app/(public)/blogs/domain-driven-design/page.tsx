@@ -1,6 +1,8 @@
 import Image from "next/image";
 import fontCss from "../../../_font.module.css";
 import Callout from "@/components/callout/callout";
+import CodeBlock from "@/components/code/codeBlock";
+import CodeBlockClient from "@/components/code/code-block-client";
 
 export default function DomainDrivenDesign() {
       return (
@@ -99,9 +101,19 @@ export default function DomainDrivenDesign() {
                                     <li>Khi tạo đề nghị thanh toán → không được vượt ngân sách.</li>
                                     <li>Khi tạo đề nghị tạm ứng → cũng không được vượt ngân sách.</li>
                               </ul>
-                              Nếu mỗi lần xử lý nghiệp vụ, hệ thống lại: truy vấn kế hoạch ngân sách từ database, rồi viết các đoạn kiểm tra kiểu như:    
-                              <code>{`if (expenseRequest.Amount > budgetPlan.Amount) `}</code>
-                              thì logic nghiệp vụ sẽ nhanh chóng bị trùng lặp, phân tán và khó bảo trì.
+                              <p>
+                                    Nếu mỗi lần xử lý nghiệp vụ, hệ thống lại: truy vấn kế hoạch ngân sách từ database, rồi viết các đoạn kiểm tra kiểu như:    
+                              </p> 
+
+<CodeBlockClient language="csharp"
+code={`if (expenseRequest.Amount > budgetPlan.Amount)
+{
+      // Logic kiểm tra vượt ngân sách
+}`.trim()}
+/>
+
+                              <p>thì logic nghiệp vụ sẽ nhanh chóng bị trùng lặp, phân tán và khó bảo trì.</p>
+                              
 
                               <h4>Cách tiếp cận theo DDD</h4>
                               Trong cách tiếp cận DDD, những đoạn kiểm tra như vậy <strong>không chỉ đơn thuần là điều kiện kỹ thuật</strong>, mà là một phần của nghiệp vụ. 

@@ -1,12 +1,11 @@
 .callout {
-      background-color: #fff;
-      border: 1px solid #d8dbff;
       border-radius: 5px;
       margin-top: 20px;
       padding: 10px;
+      background-image: linear-gradient(to top, #fbf39d, #fcf49d, #fdf69e, #fdf79e, #fef89f, #fef99f, #fff9a0, #fffaa0, #fffaa0, #fffaa0, #fffaa0, #fffaa0);
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .content {
       margin: 0 5px;
-      color: #000eda;
 }
