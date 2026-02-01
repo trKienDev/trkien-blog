@@ -4,7 +4,7 @@ import "./globals.css";
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import '@/components/code/code-block.css';
-import { lexend } from "./(public)/font";
+import { lexend } from "./[lang]/(public)/font";
 
 config.autoAddCss = false;
 

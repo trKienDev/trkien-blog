@@ -4,7 +4,7 @@
       import { spaceMono } from "../../font";
       import blogCss from "../blog.module.css";
 
-      export default function DomainDrivenDesign() {
+      export default function DomainDrivenDesignVI() {
             return (
                   <>
                         <div className="flex gap-2">
@@ -106,12 +106,12 @@
                                           Nếu mỗi lần xử lý nghiệp vụ, hệ thống lại: truy vấn kế hoạch ngân sách từ database, rồi viết các đoạn kiểm tra kiểu như:    
                                     </p> 
 
-      <CodeBlock language="csharp"
-      code={`
-      if (expenseRequest.Amount > budgetPlan.Amount)
-      {
-            // Logic kiểm tra vượt ngân sách
-      }`}/>
+<CodeBlock language="csharp"
+code={`
+if (expenseRequest.Amount > budgetPlan.Amount)
+{
+      // Logic kiểm tra vượt ngân sách
+}`}/>
 
                                     <p>thì logic nghiệp vụ sẽ nhanh chóng bị trùng lặp, phân tán và khó bảo trì.</p>
                                     
@@ -121,14 +121,12 @@
                                     Vì thế, thay vì đặt chúng rải rác ở nhiều nơi, ta đưa chúng vào chính đối tượng nghiệp vụ liên quan. 
                                     <br />
                                     Ví dụ, quy tắc “kiểm tra số tiền có vượt ngân sách hay không” được đặt vào entity 
-                                    <span className={`${spaceMono.className} ${blogCss.codeColor}`} > BudgetPlan </span>
-                                    
+                                    <span className={`${spaceMono.className} ${blogCss.codeColor}`} > BudgetPlan </span>                 
 
-      <CodeBlock language="csharp"
-      code={`
-      bool IsValid(Money amount)
-      `}/>
-
+<CodeBlock language="csharp"
+code={`
+bool IsValid(Money amount)
+`}/>
                                     Từ đó, mọi nghiệp vụ liên quan đến ngân sách chỉ cần gọi hành vi này của <span className={`${spaceMono.className} ${blogCss.codeColor}`} > BudgetPlan </span>, thay vì tự kiểm tra theo cách riêng.
 
                                     <br />

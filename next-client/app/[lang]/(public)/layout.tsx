@@ -1,6 +1,6 @@
 import Image from "next/image";
-import layoutStyles from "../layout.module.css";
-import layoutCss from "../layout.module.css";
+import layoutStyles from "../../layout.module.css";
+import layoutCss from "../../layout.module.css";
 
 export default function PublicLayout({
       children,
