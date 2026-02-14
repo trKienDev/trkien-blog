@@ -5,8 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import languageSwitcherStyle from "./LanguageSwitcher.module.css";
 
 const LANGS = [
-      { code: "vi", label: "🇻🇳 Vietnam" },
-      { code: "en", label: "🇬🇧 English" },
+      { code: "vi", label: "VI" },
+      { code: "en", label: "EN" },
 ];
 
 

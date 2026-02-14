@@ -11,7 +11,6 @@
       --label-color: #645f5f;
 
       --heading-title-color: #29294b;
-
 }
 
 body {
@@ -44,6 +43,9 @@ h4::before { content: ""; background: var(--primary-fg-color); border-radius: 2p
       width: 100%;
       margin: 0 auto;
       padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
 }
 
 

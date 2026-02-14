@@ -1,22 +1,30 @@
 import layoutCss from "../../layout.module.css";
 import React from "react";
-import HeaderPublic from "./layouts/HeaderPublic";
+import Header from "./_components/Header/Header";
+import { LangRouteProps, resolveLocale } from "@/lib/i18n";
 
-type Props = {
+type Props = LangRouteProps & {
       children: React.ReactNode;
-      params: Promise<{ lang: string }>;
 };
 
-export default async function PublicLayout({ children, params }: Props ) {
-      const { lang } = await params;
+export default async function PublicLayout({ children, params }: Props) {
+      const lang = await resolveLocale(params);
+
       return (
             <section className="page-section">
                   <div className="page-container">
-                        <HeaderPublic lang={ lang} />
+
+                        {/* header */}
+                        <Header lang={lang} />
+
+                        {/* main */}
                         <main>{children}</main>
+
+                        {/* footer */}
                         <footer className={layoutCss.footer} >
                               <span className={layoutCss.footerCopyright}>© 2026 — trKien.Blog. All Rights Reserved.</span>
                         </footer>
+
                   </div>
             </section>
       );

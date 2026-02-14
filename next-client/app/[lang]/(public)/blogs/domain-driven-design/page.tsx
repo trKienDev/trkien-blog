@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
 import DomainDrivenDesignEN from "./en";
 import DomainDrivenDesignVI from "./vi";
+import { LangRouteProps } from "@/lib/i18n";
 
-type Props = {
+type Props = LangRouteProps & {
       params: Promise<{ lang: string }>;
 };
 
