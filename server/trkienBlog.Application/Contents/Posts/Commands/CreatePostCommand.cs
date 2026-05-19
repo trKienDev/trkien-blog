@@ -10,72 +10,72 @@ using trkienBlog.Domain.Entities.Content;
 
 namespace trkienBlog.Application.Contents.Posts.Commands
 {
-        public sealed record CreatePostCommand(PostPayload Payload) : IRequest<Unit>;
-        public sealed class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Unit>
+    public sealed record CreatePostCommand(PostPayload Payload) : IRequest<Unit>;
+    public sealed class CreatePostCommandHandler : IRequestHandler<CreatePostCommand, Unit>
+    {
+        private readonly IPostRepository _postRepo;
+        private readonly ITagRepository _tagRepo;
+        private readonly ITopicRepository _topicRepo;
+        private readonly IFileStorageService _storage;
+        private readonly IUnitOfWork _uow;
+        public CreatePostCommandHandler(
+            IPostRepository postRepo,
+            ITagRepository tagRepo,
+            ITopicRepository topicRepo,
+            IFileStorageService storage,
+            IUnitOfWork uow
+        ) {
+            _postRepo = postRepo;
+            _tagRepo = tagRepo;
+            _topicRepo = topicRepo;
+            _storage = storage;
+            _uow = uow;
+        }       
+
+        public async Task<Unit> Handle(CreatePostCommand command, CancellationToken cancellation)
         {
-                private readonly IPostRepository _postRepo;
-                private readonly ITagRepository _tagRepo;
-                private readonly ITopicRepository _topicRepo;
-                private readonly IFileStorageService _storage;
-                private readonly IUnitOfWork _uow;
-                public CreatePostCommandHandler(
-                        IPostRepository postRepo,
-                        ITagRepository tagRepo,
-                        ITopicRepository topicRepo,
-                        IFileStorageService storage,
-                        IUnitOfWork uow
-                ) {
-                        _postRepo = postRepo;
-                        _tagRepo = tagRepo;
-                        _topicRepo = topicRepo;
-                        _storage = storage;
-                        _uow = uow;
-                }       
+            var payload = command.Payload;
 
-                public async Task<Unit> Handle(CreatePostCommand command, CancellationToken cancellation)
-                {
-                        var payload = command.Payload;
+            #region Validation
+            var topicExist = await _topicRepo.ExistByIdAsync(payload.TopicId, cancellation);
+            if (!topicExist) throw new NotFoundException("Topic not found");
 
-                        #region Validation
-                        var topicExist = await _topicRepo.ExistByIdAsync(payload.TopicId, cancellation);
-                        if (!topicExist) throw new NotFoundException("Topic not found");
+            var tagExist = await _tagRepo.ExistByIdsAsync(payload.TagIds, cancellation);
+            if (!tagExist) throw new NotFoundException("Tag not found");
+            #endregion
 
-                        var tagExist = await _tagRepo.ExistByIdsAsync(payload.TagIds, cancellation);
-                        if (!tagExist) throw new NotFoundException("Tag not found");
-                        #endregion
-
-                        #region Thumbnail
-                        FileUploadDto? thumbnailUpload = null;
-                        string? thumbnailKey = null;
+            #region Thumbnail
+            FileUploadDto? thumbnailUpload = null;
+            string? thumbnailKey = null;
                         
-                        if(payload.Thumbnail is not null)
-                        {
-                                thumbnailUpload = new FileUploadDto(
-                                        payload.Thumbnail.OpenReadStream(),
-                                        payload.Thumbnail.FileName,
-                                        payload.Thumbnail.ContentType
-                                );
+            if(payload.Thumbnail is not null)
+            {
+                thumbnailUpload = new FileUploadDto(
+                    payload.Thumbnail.OpenReadStream(),
+                    payload.Thumbnail.FileName,
+                    payload.Thumbnail.ContentType
+                );
 
-                                using(thumbnailUpload.Stream)
-                                {
-                                        thumbnailKey = await _storage.UploadAsync(thumbnailUpload.Stream, thumbnailUpload.FileName, thumbnailUpload.ContentType);
-                                }
-                        }
-                        #endregion
-
-                        var entity = new Post(
-                                title: payload.Title,
-                                slug: payload.Slug,
-                                contentJson: payload.ContentJson,
-                                topicId: payload.TopicId,
-                                tagIds: payload.TagIds,
-                                thumbnailKey: thumbnailKey
-                        );
-
-                        await _postRepo.Add(entity);
-                        await _uow.SaveChangesAsync(cancellation);
-
-                        return Unit.Value;
+                using(thumbnailUpload.Stream)
+                {
+                    thumbnailKey = await _storage.UploadAsync(thumbnailUpload.Stream, thumbnailUpload.FileName, thumbnailUpload.ContentType);
                 }
+            }
+            #endregion
+
+            var entity = new Post(
+                title: payload.Title,
+                slug: payload.Slug,
+                contentJson: payload.ContentJson,
+                topicId: payload.TopicId,
+                tagIds: payload.TagIds,
+                thumbnailKey: thumbnailKey
+            );
+
+            await _postRepo.Add(entity);
+            await _uow.SaveChangesAsync(cancellation);
+
+            return Unit.Value;
         }
+    }
 }
